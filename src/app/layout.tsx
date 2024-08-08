@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Sans } from "next/font/google";
 import "./globals.css";
+import { ClerkProvider, SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
 
-const IBMPlex = IBM_Plex_Sans({ 
+const IBMPlex = IBM_Plex_Sans({
   subsets: ["latin"],
-  weight:['400', '500', '600', '700'],
+  weight: ['400', '500', '600', '700'],
   variable: '--font-ibm-plex'
- });
+});
 
 export const metadata: Metadata = {
   title: "Magic Land",
@@ -20,10 +21,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={cn("font-IBMPlex antialiased", IBMPlex.variable)}>
-        {children}
-      </body>
-    </html>
+    <ClerkProvider appearance={{
+      variables: { colorPrimary:'#7C3AED'}
+    }}>
+      <html lang="en">
+        <body className={cn("font-IBMPlex antialiased", IBMPlex.variable)}>
+          <header>
+            <SignedOut>
+              <SignInButton />
+            </SignedOut>
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
+          </header>
+          {children}
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
