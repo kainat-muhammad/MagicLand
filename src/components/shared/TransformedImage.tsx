@@ -43,11 +43,11 @@ const TransformedImage = ({ image, type, title, transformationConfig, isTransfor
                         sizes={"(max-width: 767px) 100vw, 50vw"}
                         placeholder={dataUrl as PlaceholderValue}
                         className="transformed-image"
-                        onLoad={()=>{
+                        onLoad={() => {
                             setIsTransforming && setIsTransforming(false)
                         }}
-                        onError={()=>{
-                            debounce(()=>{
+                        onError={() => {
+                            debounce(() => {
                                 setIsTransforming && setIsTransforming(false)
                             }, 8000)
                         }}
@@ -55,17 +55,22 @@ const TransformedImage = ({ image, type, title, transformationConfig, isTransfor
                     />
 
                     {isTransforming && (
-                        <div className='transforming-error'>
-                            <Image src="/assets/icons/spinner.svg" width={50} height={50} alt='Transforming'/>
+                        <div className="transforming-loader">
+                            <Image
+                                src="/assets/icons/spinner.svg"
+                                width={50}
+                                height={50}
+                                alt="spinner"
+                            />
+                            <p className="text-white/80">Please wait...</p>
                         </div>
                     )}
                 </div>
             ) : (
-                <div className='tranformed-placeholder'>
+                <div className="transformed-placeholder">
                     Transformed Image
                 </div>
-            )
-            }
+            )}
         </div>
     )
 }
